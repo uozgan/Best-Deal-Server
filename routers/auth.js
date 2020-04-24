@@ -90,6 +90,7 @@ router.get("/me", authMiddleware, async (req, res) => {
   // don't send back the password hash
   const cart = await Cart.findOne({
     where: { userId: req.user.id },
+    include: [{ model: CartProduct, as: "Cart_Products" }],
   });
   delete req.user.dataValues["password"];
   res.status(200).send({ ...req.user.dataValues, cart });
